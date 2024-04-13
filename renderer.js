@@ -19,8 +19,8 @@ async function recursion(folder){
         console.log(contentlist);
         for (const i of contentlist) {
             const imageExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"];
-            const videoExtensions = [".mp4", ".mov"]
-            const audioExtensions = ["mp3"]
+            const videoExtensions = [".mp4", ".mov", ".m4v", ".webm"]
+            const audioExtensions = [".mp3", ".flac", ".wav"]
             const isImage = imageExtensions.some(ext => i.toLowerCase().endsWith(ext));
             const isAudio = audioExtensions.some(ext => i.toLowerCase().endsWith(ext));
             const isVideo = videoExtensions.some(ext => i.toLowerCase().endsWith(ext));
