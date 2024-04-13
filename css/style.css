@@ -1,0 +1,46 @@
+header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+#breadcrumb {
+    width: 50vw;
+}
+
+.breadcrumb:hover {
+    cursor: pointer;
+}
+
+
+
+#list {
+    display: flex;
+    flex-direction: column;
+}
+
+.childdiv {
+    display: flex;
+    flex-direction: row;
+    /*border: black solid 1px;*/
+    margin: 1px;
+}
+
+button {
+    flex: 2;
+}
+
+.directory, .file{
+    text-align: left;
+    background-color: transparent;
+    border: 0;
+    margin: 0;
+}
+
+.directory:hover, .file:hover{
+    background-color: lightgreen;
+}
+
+
+
+

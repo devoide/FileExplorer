@@ -1,0 +1,12 @@
+{
+  "name": "folderexplorer",
+  "version": "1.0.0",
+  "description": "File Explorer written with Electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^29.2.0"
+  }
+}

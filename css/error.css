@@ -1,0 +1,47 @@
+span {
+    font-family: "Segoe UI Historic", serif;
+}
+
+.container {
+    display: flex;
+    height: 83vh;
+    width: auto;
+    flex-direction: column;
+}
+
+.content-container{
+    display: flex;
+    justify-content: center;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.b-container{
+    margin-left: 10px;
+}
+
+.btn-container{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+#cancelbtn{
+    width: 70px;
+    border: mediumspringgreen 2px solid;
+    border-radius: 5px;
+    background-color: lightyellow;
+}
+
+#cancelbtn:hover{
+    background-color: lightgreen;
+    cursor: pointer;
+}
+
+img{
+    height: 40px;
+    width: auto;
+}
