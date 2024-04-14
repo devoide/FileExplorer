@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", load_content);
 
 
+const fileTypes = {
+    image: [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"],
+    video: [".mp4", ".mov", ".m4v", ".webm"],
+    audio: [".mp3", ".flac", ".wav"]
+};
+
 function load_content(){
     let folder = "C:\\";
     inputlisteners();
@@ -18,13 +24,6 @@ async function recursion(folder){
 
         console.log(contentlist);
         for (const i of contentlist) {
-            const imageExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"];
-            const videoExtensions = [".mp4", ".mov", ".m4v", ".webm"]
-            const audioExtensions = [".mp3", ".flac", ".wav"]
-            const isImage = imageExtensions.some(ext => i.toLowerCase().endsWith(ext));
-            const isAudio = audioExtensions.some(ext => i.toLowerCase().endsWith(ext));
-            const isVideo = videoExtensions.some(ext => i.toLowerCase().endsWith(ext));
-
             const childdiv = document.createElement("div");
             const button = document.createElement("button");
             const img = document.createElement("img");
@@ -51,11 +50,12 @@ async function recursion(folder){
                 childdiv.classList.add("file");
                 img.style.height = "20px";
                 img.style.width = "auto";
-                if (isImage){
+                const filesort = getFileType(i)
+                if (filesort === "image"){
                     img.src = "./ICON/757.ico"
-                } else if (isVideo){
+                } else if (filesort === "video"){
                     img.src = "./ICON/743.ico"
-                } else if (isAudio){
+                } else if (filesort === "audio"){
                     img.src = "./ICON/749.ico"
                 } else {
                     img.src = "./ICON/1.ico";
@@ -113,4 +113,14 @@ function inputlisteners(){
 function inputcheck(folder){
     const breadcrumb = document.getElementById("breadcrumb");
     breadcrumb.value = folder;
+}
+
+function getFileType(fileName) {
+    const extension = fileName.toLowerCase().slice(fileName.lastIndexOf('.'));
+    for (const type in fileTypes) {
+        if (fileTypes[type].includes(extension)) {
+            return type;
+        }
+    }
+    return 'unknown';
 }

@@ -4,6 +4,9 @@ const fs = require("node:fs")
 const fsPromises = fs.promises
 
 let parentwin;
+let errorwin;
+
+app.setUserTasks([])
 
 function createWindow(){
     parentwin = new BrowserWindow({
@@ -13,13 +16,14 @@ function createWindow(){
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
-    })
+    });
+    parentwin.setThumbarButtons([])
     //win.webContents.openDevTools()
     parentwin.loadFile("index.html")
 }
 
 function createErrorWindow(parentWindow){
-    let win = new BrowserWindow({
+    errorwin = new BrowserWindow({
         width: 300,
         height: 150,
         icon: "./ICON/2.ico",
@@ -27,36 +31,40 @@ function createErrorWindow(parentWindow){
         parent: parentWindow,
         alwaysOnTop: true,
         resizable: false,
-
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js')
+        }
     })
-    win.loadFile("error.html");
-    win.once('ready-to-show', () => {
-        win.show();
-        win.focus();  // Force focus on the window when it's ready to show
+    errorwin.loadFile("error.html");
+    errorwin.once("focus", () => errorwin.flashFrame(false));
+    errorwin.flashFrame(true);
+    errorwin.once('ready-to-show', () => {
+        errorwin.show();
+        errorwin.focus();
     });
 
-    win.on('closed', () => {
-        win = null;  // Dereference the window object for garbage collection
-    });
 }
+
+
+
 
 //joins paths function
 function joinpath(folder, i){
-    return path.join(folder, i)
+    return path.join(folder, i);
 }
 
 //when called, calls the join function
 ipcMain.handle("joinpath", (event, folder, i) => {
-    return joinpath(folder, i)
+    return joinpath(folder, i);
 })
 
 //checks if element is a dir and if so returns true if not false
 ipcMain.handle("isdir", async (event, folder) => { //did not work because i didnt use try and catch, plus because there was no async
     try {
-        const stats = await fsPromises.stat(folder)
-        return stats.isDirectory()
+        const stats = await fsPromises.stat(folder);
+        return stats.isDirectory();
     } catch (err) {
-        console.error(`Error checking if path is a directory: ${err}`)
+        console.error(`Error checking if path is a directory: ${err}`);
         return false;
     }
 });
@@ -64,21 +72,25 @@ ipcMain.handle("isdir", async (event, folder) => { //did not work because i didn
 //when called checks if dir exists and if so it returns a list
 ipcMain.handle("checknreadDir", (event, path) => {
     try {
-        return fs.readdirSync(path)
+        return fs.readdirSync(path);
     } catch(err) {
-        createErrorWindow(parentwin)
+        createErrorWindow(parentwin);
     }
-})
+});
 
 ipcMain.handle("parentdir", (event, folder) => {
-    return path.dirname(folder)
-})
+    return path.dirname(folder);
+});
+
+ipcMain.handle("closewin", () => {
+    errorwin.close();
+});
 
 
 //opens window if ready, it iz time
 app.whenReady().then(() => {
     createWindow()
-})
+});
 
 //TODO: create error popup system when not allowed to enter directory
 //TODO: MAKE IT BASED
