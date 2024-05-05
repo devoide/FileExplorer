@@ -3,6 +3,7 @@ const path = require("path")
 const fs = require("node:fs")
 const fsPromises = fs.promises
 const { exec } = require("child_process")
+const ndi = require('node-disk-info');
 
 let parentwin;
 let errorwin;
@@ -96,6 +97,24 @@ ipcMain.handle("start",(event, path) => {
         }
     });
 });
+
+//lists disks plus info
+ipcMain.handle("disks", () => {
+    let disklist = []
+    ndi.getDiskInfo()
+        .then(disks => {
+            disks.forEach(disk => {
+                console.log(`Disk ${disk.mounted}`);
+                console.log(`  Total: ${disk.blocks}`);
+                console.log(`  Used: ${disk.used}`);
+                console.log(`  Available: ${disk.available}`);
+                disklist.push([disk.mounted, disk.blocks, disk.used, disk.available, disk.filesystem])
+            });
+            console.log(disks);
+        })
+        .catch(error => console.error(error));
+    return disklist
+})
 
 
 //opens window if ready, it iz time

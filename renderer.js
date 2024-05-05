@@ -89,22 +89,25 @@ async function recursion(folder){
 }
 
 async function startup(parentdiv, folder, datalistparent){
+    const info =  await window.electronAPI.disks()
     while (parentdiv.firstChild) {
         parentdiv.removeChild(parentdiv.firstChild);
     }
     while (datalistparent.firstChild) {
         datalistparent.removeChild(datalistparent.firstChild);
     }
-    if (folder !== "C:\\") {
+    const infoList = info.map((x) => `${x[0]}\\`);
+    const result = infoList.find((i) => i === folder);
+    if (!result){
         const childdiv = document.createElement("div");
         const button = document.createElement("button");
         const img = document.createElement("img");
         img.src = "./ICON/35.ico";
-        img.style.height = "20px"
-        img.style.width = "20px"
-        const new_folder = await window.electronAPI.parentdir(folder)
+        img.style.height = "20px";
+        img.style.width = "20px";
+        const new_folder = await window.electronAPI.parentdir(folder);
         childdiv.addEventListener("click", function(){
-            recursion(new_folder)
+            recursion(new_folder);
         });
         childdiv.appendChild(img);
         childdiv.classList.add("directory");

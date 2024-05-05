@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     isdir: (folder, i) => ipcRenderer.invoke("isdir", folder, i),
     parentdir: (folder) => ipcRenderer.invoke("parentdir", folder),
     closewin: () => ipcRenderer.invoke("closewin"),
-    start: (path) => ipcRenderer.invoke("start", path)
+    start: (path) => ipcRenderer.invoke("start", path),
+    disks: () => ipcRenderer.invoke("disks")
 });

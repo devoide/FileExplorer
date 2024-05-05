@@ -12,6 +12,14 @@ header {
     cursor: pointer;
 }
 
+main {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+}
+
+#sidebar{
+    border-right: 1px black solid;
+}
 
 #list {
     display: flex;
@@ -21,7 +29,6 @@ header {
 .childdiv {
     display: flex;
     flex-direction: row;
-    border: black solid 1px;
     padding: 1px 0 1px 2px;
 }
 
