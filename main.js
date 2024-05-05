@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain } = require("electron/main")
 const path = require("path")
 const fs = require("node:fs")
 const fsPromises = fs.promises
+const { exec } = require("child_process")
 
 let parentwin;
 let errorwin;
@@ -18,7 +19,7 @@ function createWindow(){
         }
     });
     parentwin.setThumbarButtons([])
-    //win.webContents.openDevTools()
+    //parentwin.webContents.openDevTools()
     parentwin.loadFile("index.html")
 }
 
@@ -84,6 +85,16 @@ ipcMain.handle("parentdir", (event, folder) => {
 
 ipcMain.handle("closewin", () => {
     errorwin.close();
+});
+
+//starts a file
+ipcMain.handle("start",(event, path) => {
+    exec(`"${path}"`, (error) => {
+        if (error) {
+            console.error(`exec error: ${error}`);
+            createErrorWindow()
+        }
+    });
 });
 
 

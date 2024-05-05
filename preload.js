@@ -5,5 +5,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     joinpath: (folder, i) => ipcRenderer.invoke("joinpath", folder, i),
     isdir: (folder, i) => ipcRenderer.invoke("isdir", folder, i),
     parentdir: (folder) => ipcRenderer.invoke("parentdir", folder),
-    closewin: () => ipcRenderer.invoke("closewin")
+    closewin: () => ipcRenderer.invoke("closewin"),
+    start: (path) => ipcRenderer.invoke("start", path)
 });
