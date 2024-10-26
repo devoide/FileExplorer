@@ -20,7 +20,7 @@ function createWindow(){
         }
     });
     parentwin.setThumbarButtons([])
-    //parentwin.webContents.openDevTools()
+    parentwin.webContents.openDevTools()
     parentwin.loadFile("index.html")
 }
 
@@ -64,6 +64,7 @@ ipcMain.handle("joinpath", (event, folder, i) => {
 ipcMain.handle("isdir", async (event, folder) => { //did not work because i didnt use try and catch, plus because there was no async
     try {
         const stats = await fsPromises.stat(folder);
+        console.error(stats)
         return stats.isDirectory();
     } catch (err) {
         console.error(`Error checking if path is a directory: ${err}`);
@@ -122,5 +123,4 @@ app.whenReady().then(() => {
     createWindow()
 });
 
-//TODO: create error popup system when not allowed to enter directory
 //TODO: MAKE IT BASED

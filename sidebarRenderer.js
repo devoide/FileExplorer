@@ -13,11 +13,10 @@ async function information(){
         const parentdiv = document.getElementById("sidebar")
         const childdiv = document.createElement("div");
         const button = document.createElement("button");
-        const img = document.createElement("img");
 
         button.addEventListener("click", () => recursion(`${i[0]}\\`))
 
-        const disk = i[0]
+        /*disk = i[0]*/
         button.textContent = `${i[4]} (${i[0]})`
 
 
